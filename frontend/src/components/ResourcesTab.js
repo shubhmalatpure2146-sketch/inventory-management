@@ -1,24 +1,47 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
-import { Plus, Edit2, Trash2, Search, Flame, Wrench, Archive, Filter } from 'lucide-react';
+import { Plus, Edit2, Trash2, Search, Flame, Wrench, Archive, Filter, Settings, Package, Box, Truck, Tool, Factory, Hammer, Zap, Shield } from 'lucide-react';
 import InventoryItemModal from './InventoryItemModal';
+import CategoryManagement from './CategoryManagement';
 
 const ResourcesTab = ({ user, onRefresh }) => {
-  const [activeCategory, setActiveCategory] = useState('welding');
+  const [activeCategory, setActiveCategory] = useState('');
+  const [categories, setCategories] = useState([]);
   const [inventory, setInventory] = useState([]);
   const [filteredInventory, setFilteredInventory] = useState([]);
   const [searchQuery, setSearchQuery] = useState('');
   const [filterStatus, setFilterStatus] = useState('all');
   const [showModal, setShowModal] = useState(false);
+  const [showCategoryManagement, setShowCategoryManagement] = useState(false);
   const [selectedItem, setSelectedItem] = useState(null);
 
+  const iconMap = {
+    Flame, Wrench, Archive, Package, Box, Truck, Tool, Factory, Hammer, Settings, Zap, Shield
+  };
+
   useEffect(() => {
+    fetchCategories();
     fetchInventory();
   }, []);
 
   useEffect(() => {
+    if (categories.length > 0 && !activeCategory) {
+      setActiveCategory(categories[0].id);
+    }
+  }, [categories]);
+
+  useEffect(() => {
     filterItems();
   }, [inventory, activeCategory, searchQuery, filterStatus]);
+
+  const fetchCategories = async () => {
+    try {
+      const response = await api.get('/categories');
+      setCategories(response.data);
+    } catch (error) {
+      console.error('Failed to fetch categories:', error);
+    }
+  };
 
   const fetchInventory = async () => {
     try {
