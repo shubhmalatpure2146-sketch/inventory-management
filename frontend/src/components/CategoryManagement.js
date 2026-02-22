@@ -105,7 +105,7 @@ const CategoryManagement = ({ onClose, onUpdate }) => {
   };
 
   const iconOptions = [
-    'Package', 'Flame', 'Wrench', 'Archive', 'Box', 'Truck', 'Tool', 
+    'Package', 'Flame', 'Wrench', 'Archive', 'Box', 'Truck', 
     'Factory', 'Hammer', 'Settings', 'Zap', 'Shield'
   ];
 
