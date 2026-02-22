@@ -96,34 +96,20 @@ const ResourcesTab = ({ user, onRefresh }) => {
     return styles[status] || styles.available;
   };
 
-  const getCategoryIcon = (category) => {
-    const icons = {
-      welding: Flame,
-      fabrication: Wrench,
-      miscellaneous: Archive
-    };
-    const Icon = icons[category] || Archive;
+  const getCategoryIcon = (iconName) => {
+    const Icon = iconMap[iconName] || Archive;
     return <Icon className="w-5 h-5" />;
   };
 
-  const categories = [
-    { id: 'welding', name: 'Welding', icon: Flame },
-    { id: 'fabrication', name: 'Fabrication', icon: Wrench },
-    { id: 'miscellaneous', name: 'Miscellaneous', icon: Archive }
-  ];
-
-  const subcategories = {
-    welding: ['Welding Rods', 'Gas', 'Disposables'],
-    fabrication: ['Grinder', 'Disposables'],
-    miscellaneous: ['Nails', 'Packing Material', 'Other']
-  };
+  const currentCategory = categories.find(cat => cat.id === activeCategory);
+  const subcategories = currentCategory ? currentCategory.subcategories : [];
 
   return (
     <div className="space-y-6">
       <div className="flex flex-wrap items-center justify-between gap-4">
-        <div className="flex gap-2">
+        <div className="flex gap-2 flex-wrap">
           {categories.map(cat => {
-            const Icon = cat.icon;
+            const Icon = iconMap[cat.icon] || Archive;
             return (
               <button
                 key={cat.id}
@@ -142,19 +128,31 @@ const ResourcesTab = ({ user, onRefresh }) => {
           })}
         </div>
 
-        {user.role === 'inventory_manager' && (
-          <button
-            data-testid="add-item-button"
-            onClick={() => {
-              setSelectedItem(null);
-              setShowModal(true);
-            }}
-            className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-sm font-space text-sm uppercase shadow-[0_0_15px_rgba(70,130,180,0.3)] hover:bg-primary/90 active:scale-95 transition-all"
-          >
-            <Plus className="w-4 h-4" />
-            Add Item
-          </button>
-        )}
+        <div className="flex gap-2">
+          {user.role === 'inventory_manager' && (
+            <>
+              <button
+                data-testid="manage-categories-button"
+                onClick={() => setShowCategoryManagement(true)}
+                className="flex items-center gap-2 px-4 py-2 bg-secondary border border-border text-foreground rounded-sm font-space text-sm uppercase hover:bg-accent hover:text-accent-foreground transition-all"
+              >
+                <Settings className="w-4 h-4" />
+                Manage Categories
+              </button>
+              <button
+                data-testid="add-item-button"
+                onClick={() => {
+                  setSelectedItem(null);
+                  setShowModal(true);
+                }}
+                className="flex items-center gap-2 px-4 py-2 bg-primary text-primary-foreground rounded-sm font-space text-sm uppercase shadow-[0_0_15px_rgba(70,130,180,0.3)] hover:bg-primary/90 active:scale-95 transition-all"
+              >
+                <Plus className="w-4 h-4" />
+                Add Item
+              </button>
+            </>
+          )}
+        </div>
       </div>
 
       <div className="flex flex-wrap gap-4">
