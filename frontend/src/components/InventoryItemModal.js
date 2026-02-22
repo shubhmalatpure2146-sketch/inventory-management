@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
 import { X } from 'lucide-react';
 
-const InventoryItemModal = ({ item, category, onClose, onSave }) => {
+const InventoryItemModal = ({ item, category, categories, onClose, onSave }) => {
   const [formData, setFormData] = useState({
     name: '',
     category: category,
@@ -16,11 +16,8 @@ const InventoryItemModal = ({ item, category, onClose, onSave }) => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
 
-  const subcategories = {
-    welding: ['Welding Rods', 'Gas', 'Disposables'],
-    fabrication: ['Grinder', 'Disposables'],
-    miscellaneous: ['Nails', 'Packing Material', 'Other']
-  };
+  const currentCategory = categories.find(cat => cat.id === formData.category);
+  const subcategories = currentCategory ? currentCategory.subcategories : [];
 
   useEffect(() => {
     if (item) {
@@ -35,9 +32,13 @@ const InventoryItemModal = ({ item, category, onClose, onSave }) => {
         min_threshold: item.min_threshold
       });
     } else {
-      setFormData(prev => ({ ...prev, subcategory: subcategories[category][0] }));
+      setFormData(prev => ({ 
+        ...prev, 
+        category: category,
+        subcategory: subcategories[0] || ''
+      }));
     }
-  }, [item, category]);
+  }, [item, category, categories]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
