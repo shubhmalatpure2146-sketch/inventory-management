@@ -181,7 +181,7 @@ const ResourcesTab = ({ user, onRefresh }) => {
         </select>
       </div>
 
-      {subcategories[activeCategory].map(subcategory => {
+      {subcategories.map(subcategory => {
         const items = filteredInventory.filter(item => item.subcategory === subcategory);
         if (items.length === 0) return null;
 
@@ -269,11 +269,23 @@ const ResourcesTab = ({ user, onRefresh }) => {
         <InventoryItemModal
           item={selectedItem}
           category={activeCategory}
+          categories={categories}
           onClose={() => {
             setShowModal(false);
             setSelectedItem(null);
           }}
           onSave={handleSave}
+        />
+      )}
+
+      {showCategoryManagement && (
+        <CategoryManagement
+          onClose={() => setShowCategoryManagement(false)}
+          onUpdate={() => {
+            fetchCategories();
+            fetchInventory();
+            onRefresh();
+          }}
         />
       )}
     </div>
