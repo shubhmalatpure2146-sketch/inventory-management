@@ -1,0 +1,182 @@
+{
+  "identity": {
+    "name": "E1",
+    "mission": "Create a clean, industrial, high-density UI that feels like a physical control panel, not a generic SaaS dashboard.",
+    "tone": "Precision, Durability, Clarity, Technical.",
+    "anti_patterns": [
+      "No soft, rounded 'pill' buttons.",
+      "No large, airy whitespace (use density for data).",
+      "No generic purple/teal gradients.",
+      "No drop shadows that look like floating paper (use borders and inner glows instead)."
+    ]
+  },
+  "typography": {
+    "fonts": [
+      {
+        "family": "Space Grotesk",
+        "url": "https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap",
+        "usage": "Headings, KPI Values, Tab Labels",
+        "fallback": "sans-serif"
+      },
+      {
+        "family": "Manrope",
+        "url": "https://fonts.googleapis.com/css2?family=Manrope:wght@200;300;400;500;600;700;800&display=swap",
+        "usage": "Body Text, Inputs, Form Labels",
+        "fallback": "sans-serif"
+      },
+      {
+        "family": "JetBrains Mono",
+        "url": "https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&display=swap",
+        "usage": "Data Tables, ID Numbers, Timestamps, Code Snippets",
+        "fallback": "monospace"
+      }
+    ],
+    "styles": {
+      "h1": "font-space text-4xl font-bold tracking-tight text-foreground uppercase",
+      "h2": "font-space text-2xl font-semibold tracking-tight text-foreground/90 uppercase",
+      "h3": "font-space text-xl font-medium text-foreground/80",
+      "body": "font-manrope text-base text-muted-foreground",
+      "data": "font-mono text-sm tracking-wide text-foreground",
+      "label": "font-manrope text-xs font-semibold uppercase tracking-wider text-muted-foreground/70"
+    }
+  },
+  "colors": {
+    "theme": "dark",
+    "palette": {
+      "background": "#09090b",
+      "foreground": "#f4f4f5",
+      "card": "#18181b",
+      "card_foreground": "#f4f4f5",
+      "popover": "#18181b",
+      "popover_foreground": "#f4f4f5",
+      "primary": "#4682b4",
+      "primary_foreground": "#ffffff",
+      "secondary": "#27272a",
+      "secondary_foreground": "#f4f4f5",
+      "muted": "#27272a",
+      "muted_foreground": "#a1a1aa",
+      "accent": "#4682b4",
+      "accent_foreground": "#ffffff",
+      "destructive": "#7f1d1d",
+      "destructive_foreground": "#fef2f2",
+      "border": "#27272a",
+      "input": "#27272a",
+      "ring": "#4682b4"
+    },
+    "status": {
+      "available": {
+        "bg": "bg-emerald-950/30",
+        "text": "text-emerald-400",
+        "border": "border-emerald-800/50"
+      },
+      "low_stock": {
+        "bg": "bg-yellow-950/30",
+        "text": "text-yellow-400",
+        "border": "border-yellow-800/50"
+      },
+      "out_of_stock": {
+        "bg": "bg-red-950/30",
+        "text": "text-red-400",
+        "border": "border-red-800/50"
+      }
+    },
+    "steel_blue_variants": {
+      "50": "#f0f7ff",
+      "100": "#e0effe",
+      "200": "#bae0fd",
+      "300": "#7cc5fb",
+      "400": "#36a9f8",
+      "500": "#0c8de9",
+      "600": "#0270c5",
+      "700": "#4682b4",
+      "800": "#074a85",
+      "900": "#0b3e6b",
+      "950": "#082846"
+    }
+  },
+  "layout": {
+    "container": "max-w-[1600px] mx-auto p-6",
+    "grid_system": "grid grid-cols-1 md:grid-cols-12 gap-6",
+    "dashboard_grid": {
+      "kpi_section": "col-span-12 grid grid-cols-1 md:grid-cols-3 gap-4",
+      "main_content": "col-span-12 md:col-span-8 lg:col-span-9",
+      "sidebar": "col-span-12 md:col-span-4 lg:col-span-3"
+    },
+    "spacing": {
+      "section_gap": "gap-8",
+      "card_padding": "p-6",
+      "item_gap": "gap-4"
+    }
+  },
+  "components": {
+    "buttons": {
+      "default": "rounded-sm font-medium transition-all active:scale-95",
+      "primary": "bg-primary text-primary-foreground hover:bg-primary/90 shadow-[0_0_15px_rgba(70,130,180,0.3)]",
+      "outline": "border border-input bg-transparent hover:bg-accent hover:text-accent-foreground",
+      "ghost": "hover:bg-accent hover:text-accent-foreground"
+    },
+    "cards": {
+      "base": "rounded-sm border border-border bg-card/50 backdrop-blur-sm",
+      "industrial_detail": "relative overflow-hidden before:absolute before:top-0 before:left-0 before:w-1 before:h-full before:bg-primary/50"
+    },
+    "inputs": {
+      "base": "rounded-sm border-border bg-background/50 focus:ring-1 focus:ring-primary focus:border-primary transition-colors"
+    },
+    "badges": {
+      "base": "inline-flex items-center px-2.5 py-0.5 rounded-sm text-xs font-medium border uppercase tracking-wider"
+    },
+    "tabs": {
+      "list": "bg-secondary/50 p-1 rounded-sm border border-border/50",
+      "trigger": "rounded-sm data-[state=active]:bg-primary data-[state=active]:text-primary-foreground data-[state=active]:shadow-none transition-all"
+    }
+  },
+  "visual_enhancers": {
+    "textures": {
+      "noise": "url(\"data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.65' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)' opacity='0.05'/%3E%3C/svg%3E\")",
+      "scanlines": "linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%), linear-gradient(90deg, rgba(255, 0, 0, 0.06), rgba(0, 255, 0, 0.02), rgba(0, 0, 255, 0.06))"
+    },
+    "borders": {
+      "subtle": "1px solid rgba(255,255,255,0.08)",
+      "active": "1px solid #4682b4"
+    }
+  },
+  "assets": {
+    "categories": [
+      {
+        "name": "Welding",
+        "image": "https://images.unsplash.com/photo-1731397979951-054128e9c6d4",
+        "description": "Welder working with sparks"
+      },
+      {
+        "name": "Fabrication",
+        "image": "https://images.unsplash.com/photo-1755943421697-a9948e8c6234",
+        "description": "Industrial machinery and metal shavings"
+      },
+      {
+        "name": "Miscellaneous",
+        "image": "https://images.pexels.com/photos/30341205/pexels-photo-30341205.jpeg?auto=compress&cs=tinysrgb&dpr=2&h=650&w=940",
+        "description": "Warehouse shelves"
+      }
+    ]
+  },
+  "universal_guidelines": [
+    "DO NOT use gradients for backgrounds; use solid dark colors with noise texture.",
+    "Use 'Space Grotesk' for all headings to maintain industrial feel.",
+    "Use 'JetBrains Mono' for all data, numbers, and IDs.",
+    "Borders should be sharp (rounded-sm or rounded-none).",
+    "Active states should glow faintly (steel blue shadow).",
+    "Tables should have a 'holographic' feel: dark transparent background with bottom borders.",
+    "Use distinct status colors (Emerald, Yellow, Red) but keeping them desaturated/dark mode appropriate.",
+    "Interactive elements must have `data-testid`."
+  ],
+  "instructions_to_main_agent": [
+    "Update `tailwind.config.js` to include the custom colors and fonts defined.",
+    "Install the required fonts via Google Fonts import in `index.css`.",
+    "Create a `Layout` component that includes the sidebar/navbar structure.",
+    "Use Shadcn components but override their default `rounded-md` to `rounded-sm`.",
+    "Implement the 3 main tabs: 'Resources / Items', 'Orders Placed', 'Vendors'.",
+    "For the 'Resources' tab, use the provided category images as entry points.",
+    "Ensure the 'Orders Placed' tab uses a dense table layout.",
+    "Ensure the 'Vendors' tab uses a card layout."
+  ]
+}
