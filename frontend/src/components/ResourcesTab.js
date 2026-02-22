@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
-import { Plus, Edit2, Trash2, Search, Flame, Wrench, Archive, Filter, Settings, Package, Box, Truck, Tool, Factory, Hammer, Zap, Shield } from 'lucide-react';
+import { Plus, Edit2, Trash2, Search, Flame, Wrench, Archive, Filter, Settings, Package, Box, Truck, Factory, Hammer, Zap, Shield } from 'lucide-react';
 import InventoryItemModal from './InventoryItemModal';
 import CategoryManagement from './CategoryManagement';
 
@@ -16,7 +16,7 @@ const ResourcesTab = ({ user, onRefresh }) => {
   const [selectedItem, setSelectedItem] = useState(null);
 
   const iconMap = {
-    Flame, Wrench, Archive, Package, Box, Truck, Tool, Factory, Hammer, Settings, Zap, Shield
+    Flame, Wrench, Archive, Package, Box, Truck, Factory, Hammer, Settings, Zap, Shield
   };
 
   useEffect(() => {
