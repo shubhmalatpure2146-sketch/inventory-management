@@ -164,6 +164,26 @@ class DashboardStats(BaseModel):
     total_orders: int
     active_vendors: int
 
+class Category(BaseModel):
+    model_config = ConfigDict(extra="ignore")
+    id: str
+    name: str
+    icon: str
+    subcategories: List[str]
+    order: int
+    created_at: str
+
+class CategoryCreate(BaseModel):
+    name: str
+    icon: str
+    subcategories: List[str]
+
+class CategoryUpdate(BaseModel):
+    name: Optional[str] = None
+    icon: Optional[str] = None
+    subcategories: Optional[List[str]] = None
+    order: Optional[int] = None
+
 @api_router.post("/auth/register", response_model=UserResponse)
 async def register(user_data: UserRegister):
     existing_user = await db.users.find_one({"email": user_data.email})
