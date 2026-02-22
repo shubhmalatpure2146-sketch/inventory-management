@@ -392,6 +392,65 @@ async def get_dashboard_stats(current_user: dict = Depends(get_current_user)):
         active_vendors=active_vendors
     )
 
+@api_router.get("/categories", response_model=List[Category])
+async def get_categories(current_user: dict = Depends(get_current_user)):
+    categories = await db.categories.find({}, {"_id": 0}).sort("order", 1).to_list(100)
+    return categories
+
+@api_router.post("/categories", response_model=Category)
+async def create_category(category: CategoryCreate, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "inventory_manager":
+        raise HTTPException(status_code=403, detail="Only inventory managers can create categories")
+    
+    import uuid
+    category_id = str(uuid.uuid4())
+    
+    # Get the highest order number and add 1
+    existing_categories = await db.categories.find({}, {"_id": 0}).to_list(100)
+    max_order = max([cat.get("order", 0) for cat in existing_categories], default=0)
+    
+    category_doc = {
+        "id": category_id,
+        "name": category.name,
+        "icon": category.icon,
+        "subcategories": category.subcategories,
+        "order": max_order + 1,
+        "created_at": datetime.now(timezone.utc).isoformat()
+    }
+    await db.categories.insert_one(category_doc)
+    return Category(**category_doc)
+
+@api_router.put("/categories/{category_id}", response_model=Category)
+async def update_category(category_id: str, update: CategoryUpdate, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "inventory_manager":
+        raise HTTPException(status_code=403, detail="Only inventory managers can update categories")
+    
+    category = await db.categories.find_one({"id": category_id}, {"_id": 0})
+    if not category:
+        raise HTTPException(status_code=404, detail="Category not found")
+    
+    update_data = {k: v for k, v in update.model_dump().items() if v is not None}
+    if update_data:
+        await db.categories.update_one({"id": category_id}, {"$set": update_data})
+    
+    updated_category = await db.categories.find_one({"id": category_id}, {"_id": 0})
+    return Category(**updated_category)
+
+@api_router.delete("/categories/{category_id}")
+async def delete_category(category_id: str, current_user: dict = Depends(get_current_user)):
+    if current_user["role"] != "inventory_manager":
+        raise HTTPException(status_code=403, detail="Only inventory managers can delete categories")
+    
+    # Check if category has items
+    items_count = await db.inventory.count_documents({"category": category_id})
+    if items_count > 0:
+        raise HTTPException(status_code=400, detail=f"Cannot delete category with {items_count} items. Please reassign or delete items first.")
+    
+    result = await db.categories.delete_one({"id": category_id})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Category not found")
+    return {"message": "Category deleted successfully"}
+
 app.include_router(api_router)
 
 app.add_middleware(
