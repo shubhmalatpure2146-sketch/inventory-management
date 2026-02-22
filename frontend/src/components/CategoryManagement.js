@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import api from '../utils/api';
-import { Plus, Edit2, Trash2, X, Settings, ChevronUp, ChevronDown } from 'lucide-react';
+import { Plus, Edit2, Trash2, X, Settings, ChevronUp, ChevronDown, Archive } from 'lucide-react';
 
 const CategoryManagement = ({ onClose, onUpdate }) => {
   const [categories, setCategories] = useState([]);
