@@ -19,6 +19,37 @@ async def populate_database():
     await db.inventory.delete_many({})
     await db.orders.delete_many({})
     await db.vendors.delete_many({})
+    await db.categories.delete_many({})
+    
+    print("Creating default categories...")
+    categories = [
+        {
+            "id": "welding",
+            "name": "Welding",
+            "icon": "Flame",
+            "subcategories": ["Welding Rods", "Gas", "Disposables"],
+            "order": 1,
+            "created_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "id": "fabrication",
+            "name": "Fabrication",
+            "icon": "Wrench",
+            "subcategories": ["Grinder", "Disposables"],
+            "order": 2,
+            "created_at": datetime.now(timezone.utc).isoformat()
+        },
+        {
+            "id": "miscellaneous",
+            "name": "Miscellaneous",
+            "icon": "Archive",
+            "subcategories": ["Nails", "Packing Material", "Other"],
+            "order": 3,
+            "created_at": datetime.now(timezone.utc).isoformat()
+        }
+    ]
+    await db.categories.insert_many(categories)
+    print(f"Created {len(categories)} categories")
     
     print("Creating demo users...")
     users = [
