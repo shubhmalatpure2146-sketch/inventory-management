@@ -116,7 +116,7 @@ const InventoryItemModal = ({ item, category, categories, onClose, onSave }) => 
                   className="w-full px-4 py-2 bg-background/50 border border-border rounded-sm font-manrope text-foreground focus:ring-1 focus:ring-primary focus:border-primary outline-none transition-colors"
                   required
                 >
-                  {subcategories[category].map(sub => (
+                  {subcategories.map(sub => (
                     <option key={sub} value={sub}>{sub}</option>
                   ))}
                 </select>
